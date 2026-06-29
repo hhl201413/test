@@ -1,0 +1,40 @@
+心遇助手 Android 版打包说明
+========================
+
+这句话的意思：
+  签到.py 里的「签到/送礼 API 逻辑」可以复用；
+  但 tkinter 界面不能用在手机上，必须用 Kivy 重做界面，再用 Buildozer 打成 APK。
+
+本项目 android_app/ 目录：
+  main.py      - Kivy 手机界面（账号、一键签到、相逢有礼）
+  moyi_api.py  - 从桌面版抽出的 API 逻辑
+  buildozer.spec - Android 打包配置
+
+打包 APK（必须在 WSL2 / Linux 中）：
+
+  方式一（推荐）：先安装 WSL
+    1. 管理员 PowerShell: wsl --install -d Ubuntu
+    2. 重启电脑，打开 Ubuntu 完成初始化
+    3. 双击 build_apk.bat
+
+  方式二：在 Ubuntu 终端手动执行
+    cd /mnt/c/Users/MY/PyCharmMiscProject/test/签到/android_app
+    bash build_apk.sh
+
+  生成的 APK:
+    bin/moyihelper-1.0.0-arm64-v8a_debug.apk
+    bin/moyihelper-1.0.0-armeabi-v7a_debug.apk
+
+  安装到手机:
+    adb install bin/moyihelper-1.0.0-arm64-v8a_debug.apk
+
+本地预览（Windows，非 APK）：
+  双击 run.bat
+
+Kivy vs BeeWare：
+  Kivy + Buildozer：社区成熟，打 APK 资料多，推荐
+  BeeWare：界面更接近原生，但 Android 打包配置更复杂，生态较小
+
+Android 定时签到限制：
+  手机杀后台后定时任务可能不执行，需前台服务或系统「允许后台运行」。
+  桌面 exe 版定时更稳定。
