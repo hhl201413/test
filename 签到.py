@@ -112,8 +112,55 @@ class AccountManager:
         self.create_widgets()
         self.refresh_table()
 
-        if self.schedule_config.get('auto_start', False):
+        if self.schedule_config.get('enabled'):
+            self.apply_schedule()
             self.start_scheduler()
+
+    def _parse_time_parts(self, time_str):
+        parts = time_str.strip().split(':')
+        return int(parts[0]), int(parts[1])
+
+    def _random_time_in_range(self):
+        sh, sm = self._parse_time_parts(self.schedule_config['start_time'])
+        eh, em = self._parse_time_parts(self.schedule_config['end_time'])
+        start_m = sh * 60 + sm
+        end_m = eh * 60 + em
+        if end_m < start_m:
+            end_m = start_m
+        pick = random.randint(start_m, end_m)
+        return pick // 60, pick % 60
+
+    def apply_schedule(self):
+        schedule.clear()
+        self.next_run_time = None
+        if not self.schedule_config.get('enabled'):
+            return
+
+        hour, minute = self._random_time_in_range()
+        time_str = f"{hour:02d}:{minute:02d}"
+        today = datetime.now().date()
+        run_at = datetime.combine(today, datetime.strptime(time_str, "%H:%M").time())
+        if run_at <= datetime.now():
+            run_at += timedelta(days=1)
+        self.next_run_time = run_at
+        schedule.every().day.at(time_str).do(self._trigger_daily_sign_in)
+        self.log_scheduler(f"已安排下次签到: {self.next_run_time.strftime('%Y-%m-%d %H:%M')}")
+
+    def _trigger_daily_sign_in(self):
+        self.log_scheduler("到达定时签到时间，开始执行")
+        threading.Thread(target=self._execute_daily_sign_in, daemon=True).start()
+
+    def _execute_daily_sign_in(self):
+        if not self.accounts:
+            self.log_scheduler("定时签到跳过：无账号")
+            self.apply_schedule()
+            return
+        self.log_scheduler("===== 定时签到开始 =====")
+        for account in self.accounts:
+            self.sign_in_single(account, self.log_scheduler)
+            time.sleep(2)
+        self.log_scheduler("===== 定时签到完成 =====")
+        self.apply_schedule()
 
     def load_accounts(self):
         if os.path.exists(self.data_file):
@@ -581,8 +628,8 @@ class AccountManager:
         print(f"[{datetime.now().strftime('%H:%M:%S')}] {message}")
 
     def scheduled_sign_in(self):
-        self.log_scheduler("定时签到执行")
-        self.batch_sign_in()
+        self.log_scheduler("手动触发定时签到")
+        threading.Thread(target=self._execute_daily_sign_in, daemon=True).start()
 
     def scheduled_sign_xiangfeng(self):
         self.log_scheduler("定时签到相逢有礼")
@@ -604,6 +651,22 @@ class AccountManager:
         status_label = tk.Label(status_frame, text="🟢 运行中" if self.scheduler_running else "🔴 未运行",
                                 font=('Arial', 12), fg='green' if self.scheduler_running else 'red')
         status_label.pack()
+        next_run_label = tk.Label(status_frame, font=('Arial', 10), fg='#555')
+        next_run_label.pack(pady=5)
+
+        def refresh_status():
+            status_label.config(
+                text="🟢 运行中" if self.scheduler_running else "🔴 未运行",
+                fg='green' if self.scheduler_running else 'red'
+            )
+            if self.schedule_config.get('enabled') and self.next_run_time:
+                next_run_label.config(text=f"下次签到: {self.next_run_time.strftime('%Y-%m-%d %H:%M')}")
+            elif self.schedule_config.get('enabled'):
+                next_run_label.config(text="下次签到: 等待安排")
+            else:
+                next_run_label.config(text="下次签到: 未启用")
+
+        refresh_status()
 
         time_frame = tk.LabelFrame(main_frame, text="随机时间区间", padx=15, pady=15)
         time_frame.pack(fill='x', pady=10)
@@ -632,9 +695,19 @@ class AccountManager:
         def save():
             self.schedule_config['enabled'] = enable_var.get()
             self.schedule_config['auto_start'] = auto_var.get()
-            self.schedule_config['start_time'] = f"{start_hour_var.get()}:{start_min_var.get()}"
-            self.schedule_config['end_time'] = f"{end_hour_var.get()}:{end_min_var.get()}"
+            sh, sm = int(start_hour_var.get()), int(start_min_var.get())
+            eh, em = int(end_hour_var.get()), int(end_min_var.get())
+            self.schedule_config['start_time'] = f"{sh:02d}:{sm:02d}"
+            self.schedule_config['end_time'] = f"{eh:02d}:{em:02d}"
             self.save_schedule_config()
+            if enable_var.get():
+                self.apply_schedule()
+                self.start_scheduler()
+            else:
+                schedule.clear()
+                self.next_run_time = None
+                self.stop_scheduler()
+            refresh_status()
             messagebox.showinfo("成功", "配置已保存")
 
         tk.Button(main_frame, text="保存配置", command=save, bg='#4CAF50', fg='white', width=15).pack(pady=15)
