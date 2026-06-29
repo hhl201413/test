@@ -2,12 +2,37 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog, scrolledtext
 import json
 import os
-import requests
+import sys
 import time
 import threading
 import schedule
 from datetime import datetime, timedelta
 import random
+
+
+def _init_ssl_certs():
+    """PyInstaller 打包后 requests 找不到 cacert.pem，需手动指定证书路径"""
+    if not getattr(sys, 'frozen', False):
+        return
+    base = getattr(sys, '_MEIPASS', '')
+    candidates = [
+        os.path.join(base, 'certifi', 'cacert.pem'),
+        os.path.join(base, 'requests', 'cacert.pem'),
+    ]
+    try:
+        import certifi
+        candidates.insert(0, certifi.where())
+    except ImportError:
+        pass
+    for path in candidates:
+        if path and os.path.isfile(path):
+            os.environ['REQUESTS_CA_BUNDLE'] = path
+            os.environ['SSL_CERT_FILE'] = path
+            break
+
+
+_init_ssl_certs()
+import requests
 
 
 class AccountDialog(tk.Toplevel):
