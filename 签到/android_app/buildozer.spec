@@ -17,7 +17,8 @@ android.archs = arm64-v8a
 android.accept_sdk_license = True
 android.allow_backup = True
 android.debuggable = 1
-p4a.branch = stable
+android.release_artifact = apk
+p4a.branch = develop
 android.ndk = 25b
 
 [buildozer]
