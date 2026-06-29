@@ -14,6 +14,7 @@ CN_FONT = 'CnFont'
 def _find_chinese_font():
   app_dir = os.path.dirname(os.path.abspath(__file__))
   bundled = [
+    os.path.join(app_dir, 'fonts', 'noto.ttc'),
     os.path.join(app_dir, 'fonts', 'msyh.ttc'),
     os.path.join(app_dir, 'fonts', 'simhei.ttf'),
     os.path.join(app_dir, 'fonts', 'NotoSansSC-Regular.otf'),
@@ -66,7 +67,7 @@ def _font_kwargs(font_name):
 
 
 class MoyiApp(App):
-  title = '心遇助手'
+  title = '某遇助手'
 
   def build(self):
     self.font_name = FONT_NAME
@@ -98,7 +99,7 @@ class MoyiApp(App):
     root.add_widget(scroll)
 
     if self.font_name:
-      self._log('心遇助手已启动')
+      self._log('某遇助手已启动')
     else:
       self._log('未找到系统中文字体，中文可能显示异常')
     return root

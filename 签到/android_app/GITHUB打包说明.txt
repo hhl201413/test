@@ -1,0 +1,73 @@
+GitHub 云端打包 APK 说明
+======================
+
+无需本机 WSL，在 GitHub 服务器上自动打包。
+
+一、首次准备（只需一次）
+----------------------
+
+1. 注册 GitHub 账号：https://github.com
+
+2. 新建仓库（例如 moyi-signin），不要勾选 README（若本地已有代码）
+
+3. 在本项目根目录（test 文件夹）打开 PowerShell，执行：
+
+   cd c:\Users\MY\PyCharmMiscProject\test
+
+   git add .
+   git commit -m "add android app and github workflow"
+   git branch -M main
+   git remote add origin https://github.com/你的用户名/你的仓库名.git
+   git push -u origin main
+
+   若已有 remote，直接 git push。
+
+二、触发打包
+------------
+
+1. 浏览器打开你的 GitHub 仓库
+
+2. 点击顶部 **Actions**
+
+3. 左侧选择 **Build Android APK**
+
+4. 右侧点击 **Run workflow** → 再点绿色 **Run workflow**
+
+5. 等待约 30~90 分钟（首次最久，会下载 Android SDK/NDK）
+
+6. 绿色勾表示成功，点进该次运行
+
+7. 页面底部 **Artifacts** → 下载 **moyihelper-apk**（zip 里就是 .apk）
+
+三、安装到手机
+--------------
+
+1. 解压 zip，得到 moyihelper-1.0.0-arm64-v8a_debug.apk
+2. 传到手机安装（允许未知来源）
+3. 大部分新手机用 arm64 版本即可
+
+四、修改代码后重新打包
+----------------------
+
+改完 android_app 里的代码后：
+
+   git add .
+   git commit -m "update app"
+   git push
+
+再到 Actions 里手动 **Run workflow** 一次。
+
+五、常见问题
+------------
+
+Q: Actions 页是空的？
+A: 确认 .github/workflows/build-apk.yml 已 push 到 GitHub。
+
+Q: 打包失败？
+A: 点进失败的运行，展开 Build APK 步骤查看红色日志，把报错发出来排查。
+
+Q: 私有仓库能用吗？
+A: 可以。GitHub 免费账号私有仓库也有 Actions 额度（每月约 2000 分钟）。
+
+Q: 和本地 run.bat 区别？
+A: run.bat 是电脑预览；Actions 打出的是真 APK。

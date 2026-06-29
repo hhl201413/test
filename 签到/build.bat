@@ -3,7 +3,7 @@ chcp 65001 >nul
 cd /d "%~dp0"
 
 echo ========================================
-echo   心遇助手 - 打包为 EXE
+echo   某遇助手 - 打包为 EXE
 echo ========================================
 echo.
 
@@ -67,7 +67,7 @@ if errorlevel 1 (
     %PIP% install certifi --proxy "" -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
 )
 
-set "PYI_ARGS=--onefile --windowed --name 心遇助手 --clean --collect-data certifi --collect-data requests --hidden-import certifi"
+set "PYI_ARGS=--onefile --windowed --name 某遇助手 --clean --collect-data certifi --collect-data requests --hidden-import certifi"
 
 echo [2/3] 开始打包...
 if exist "%~dp0..\.venv\Scripts\pyinstaller.exe" (
@@ -94,9 +94,9 @@ if errorlevel 1 (
 echo.
 echo [3/3] 打包完成！
 echo.
-echo EXE 位置: %~dp0dist\心遇助手.exe
+echo EXE 位置: %~dp0dist\某遇助手.exe
 echo.
-echo 请将 dist\心遇助手.exe 复制到固定文件夹后使用。
+echo 请将 dist\某遇助手.exe 复制到固定文件夹后使用。
 echo 账号等配置会保存在 data 目录（exe 旁）或运行目录。
 echo.
 pause

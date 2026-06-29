@@ -8,7 +8,7 @@ cd "$SCRIPT_DIR"
 MIRROR="-i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn"
 
 echo "========================================"
-echo "  心遇助手 - Buildozer 打包 APK"
+echo "  某遇助手 - Buildozer 打包 APK"
 echo "========================================"
 echo "工作目录: $SCRIPT_DIR"
 echo

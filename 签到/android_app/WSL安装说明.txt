@@ -1,0 +1,102 @@
+WSL 安装失败：「无法解析服务器的名称或地址」
+============================================
+
+原因：wsl --install 需要从微软服务器下载 Ubuntu，国内网络/DNS 经常连不上。
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+方案 A：先修网络再装（推荐先试）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. 关闭 VPN/代理，或以管理员打开 PowerShell：
+
+   netsh winhttp reset proxy
+
+2. 把 DNS 改成国内公共 DNS（控制面板 → 网络 → 适配器 → IPv4）：
+   首选 223.5.5.5
+   备用 114.114.114.114
+
+3. 刷新 DNS 缓存：
+
+   ipconfig /flushdns
+
+4. 再试（用网页下载，不走商店）：
+
+   wsl --install --web-download -d Ubuntu
+
+若仍失败，继续方案 B。
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+方案 B：手动启用 WSL + 离线装 Ubuntu
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【步骤 1】管理员 PowerShell 启用组件：
+
+   dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+   dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+
+   执行后重启电脑。
+
+【步骤 2】安装 WSL2 内核更新包（浏览器下载，不依赖 wsl 在线解析）：
+
+   打开微软官方页面搜索 "WSL2 Linux kernel update package"
+   或直接访问：
+   https://aka.ms/wsl2kernel
+
+   下载 wsl_update_x64.msi 并安装。
+
+【步骤 3】设 WSL2 为默认：
+
+   wsl --set-default-version 2
+
+【步骤 4】离线安装 Ubuntu（浏览器下载 rootfs）：
+
+   打开（用浏览器，可挂梯子或找国内镜像）：
+   https://cloud-images.ubuntu.com/wsl/releases/22.04/current/
+
+   下载：ubuntu-jammy-wsl-amd64-wsl.rootfs.tar.gz
+
+   放到例如：C:\WSL\
+
+【步骤 5】导入发行版（普通 PowerShell）：
+
+   mkdir C:\WSL\Ubuntu
+   wsl --import Ubuntu C:\WSL\Ubuntu C:\WSL\ubuntu-jammy-wsl-amd64-wsl.rootfs.tar.gz --version 2
+
+【步骤 6】进入 Ubuntu：
+
+   wsl -d Ubuntu
+
+   首次进入后设置用户（可选）：
+   useradd -m -s /bin/bash myuser
+   passwd myuser
+   usermod -aG sudo myuser
+   echo -e "[user]\ndefault=myuser" >> /etc/wsl.conf
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+方案 C：不装 WSL，用 GitHub 云端打包 APK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+若本机始终装不了 WSL，可用 GitHub Actions 在云端 Linux 自动打包。
+
+1. 把项目推到 GitHub 仓库
+2. 仓库里已有 .github/workflows/build-apk.yml（见 android_app 说明）
+3. 在 GitHub 网页 Actions 页手动运行 workflow
+4. 完成后从 Artifacts 下载 APK
+
+无需本机 WSL。
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+装好 WSL 后打包 APK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   cd /mnt/c/Users/MY/PyCharmMiscProject/test/签到/android_app
+   bash build_apk.sh
+
+或双击 build_apk.bat
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+暂时只想在电脑上看界面
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   双击 android_app\run.bat
+   （这是 Kivy 预览，不是 APK）
