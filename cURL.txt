@@ -1,0 +1,16 @@
+curl -X POST 'http://api.moyi.163.com/neapi/moyi/activity/common/key/storage' \
+  -H 'cm_no_encrypt_native_tag_20220105: false' \
+  -H 'CMPageId: WebViewActivity' \
+  -H 'User-Agent: NeteaseMoyi/2.20.0.260305100204(195);Dalvik/2.1.0 (Linux; U; Android 16; PLQ110 Build/BP2A.250605.015)' \
+  -H 'X-ER: 25788' \
+  -H 'X-NAPM-RETRY: HTTPS_TO_HTTP_RETRY_javax.net.ssl.SSLHandshakeException: java.security.cert.CertPathValidatorException: Trust anchor for certification path not found._0' \
+  -H 'MConfig-Info: {"TT5Fdk0jbjHC6OZ5":{"version":"9361408","appver":"2.20.0"}}' \
+  -H 'X-MAM-CustomMark: okhttp' \
+  -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+  -H 'Content-Length: 156' \
+  -H 'Host: api.moyi.163.com' \
+  -H 'Connection: Keep-Alive' \
+  -H 'Accept-Encoding: gzip' \
+  -H 'Cookie: deviceId=bnVsbAkwMjowMDowMDowMDowMDowMAllYTE2M2QyMTg2N2RkNTYyCWEyNmNjYmRiMTQyZTUyZTE%3D; appkey=TT5Fdk0jbjHC6OZ5; packageType=dev; NMDI=Q1NKTQkBDADU0mhJgea3yhn1cPkSAAAA975tw6Y3qa59s6iH6qC7Djlg; mobilename=PLQ110; resolution=2603x1272; osver=16; versioncode=195; __csrf=76613d53e294d6b9f986281add50cdaf; os=android; buildver=260305100204; NMTID=00ONqi6WyvcwAIMnUlpnob5W7ZbcMIAAAGdbDMPOg; NMCID=ysloon.1775636777472.01.4; URS_APPID=00F66C9880B5C793F3FFB31EF349A3481DF8EB02CEA1CB245463065EDB7901E2888BBDD2609A548EFA6B1B3C7AFAE500; EVNSM=1.0.0; MUSIC_U=my.3pAQ6z1hRk4k7Q4CsG65ghtM5UqHucEibDWuv2uEROl0mAp47XhxOIHmzTTfOYFRTcQCAPLItZj5MU+6XJ/AqVejP/Ge0j94GKDh6qtouXlpRzhpnSIZlOS7w9vX3camM3jsbPV2+RwzVFdJlNDuvjmZGXsSkCplXEP/1dJCm5fvBvwH58JBJ2gOr6SBHeiqiF1HUtc6y0men4aTc3Om5+I9iIHwz8aqCeqfhO9GT/oHfN2XchhuCjO2bJbwefYOEEVnJ7wPZdqO58YYvvtJTek7Im8FM79jnLoEQylnrvY=; channel=huawei1; appver=2.20.0; brand=OnePlus'  \
+   --data 'Q1NKTWS8DAAhLxTbw5hulhgY5dMQgUrH+hBQds94SSpHC97H0UoAAACzd5nH2CP2jt/F/gOuQ2yR/khzSexfMhhJGCOKjXlkZDeA/8jZz8JYrvDo4k5MNl0l3bp/9Nwud/VEM74ggL5NrOW5l9lgxLW2dQ==' \
+  --compressed

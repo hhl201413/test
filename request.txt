@@ -1,0 +1,42 @@
+Request
+POST http://api.moyi.163.com/neapi/social/activity/dynamic/recall/present/batch/send HTTP/1.1
+cm_no_encrypt_native_tag_20220105: false
+CMPageId: WebViewActivity
+User-Agent: NeteaseMoyi/2.20.0.260212151954(195);Dalvik/2.1.0 (Linux; U; Android 13; M2011K2C Build/TKQ1.220829.002)
+X-ER: 25788
+X-NAPM-RETRY: HTTPS_TO_HTTP_RETRY_javax.net.ssl.SSLHandshakeException: java.security.cert.CertPathValidatorException: Trust anchor for certification path not found._0
+MConfig-Info: {"TT5Fdk0jbjHC6OZ5":{"version":"9369600","appver":"2.20.0"}}
+X-MAM-CustomMark: okhttp
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+Content-Length: 524
+Host: api.moyi.163.com
+Connection: Keep-Alive
+Accept-Encoding: gzip
+Cookie: deviceId=CTAyOjAwOjAwOjAwOjAwOjAwCTVmNTNkZWVkYmYwYjI2MzYJZTMzYWQ1ZGZiZjY2OTBhNQ%3D%3D; appkey=TT5Fdk0jbjHC6OZ5; packageType=dev; NMDI=Q1NKTQkBDACtkoFr3gwxetaMCdYSAAAAfceR8QZNlMJIn6xGHJ8phmu0; mobilename=M2011K2C; resolution=2173x1080; osver=13; __csrf=4ec3d605ac30c6bf881e2883f2f3cb80; versioncode=195; os=android; buildver=260212151954; NMTID=00O8Q50utJEK6mntUZzq-S7r-BIHDoAAAGdk8cGCw; NMCID=gpdlmv.1776300786680.01.4; URS_APPID=C5A88DB950C20775CA41A53A4B6BC5E02B28D4C910D25F2B4619B51B3FA95BF3D3D88940533D28FE53E5DBF3A6AE5D7A; EVNSM=1.0.0; MUSIC_U=my.pQgHruKMitWsGujbvCJ023ZYW7aOQm4BounziX0HSRWCW6M/Ur6134Zlja/oUb0/bH3Zgszq4HHROC2/uhaNdrxpujUvo85jYTlOmUcD8k/HnLGFiroM34fXdUiWKcPC2MnIZNJAvPlELRHKq9cIRI133BCkgv3U3QsSjCIPtWS6H11hHEgul3gXQppkOdzHWl65VHSe0q7MsRPjP/rzMCo/59aEuE/rCSmRtd16wpjMJYzxCyIF1UWSMFJ+Zpr9lVxeFG/XjzXqO9gdbqIlrNu9fTrcnGUIJvgcMRzekhE=; channel=huawei1; appver=2.20.0; brand=Xiaomi
+
+
+Q1NKTWS8DADqXqck7dLTgvWuq7cQ4YY1e7yW2AKRgtZ2ohBpQ14BAABMaStB+z7Ax/4yQ5IgSNJcPHoqzboum+GtCTodIRwt7owMFXYu/h2tpBKN3Rsph+qcL6o93JmGydmjlgSLwLIELwFzBwgKfnEsvFLt1nXy9iUs1Ma0BIXAnqpGJebljguwEDaxd7epv3G489DedhLVn/ITTlROG+uBPwtIY36p2gtR1I4S/wHAEMjp/wPEbz01RqR6GJQbBh77QMY4M+UxkayAyJace3p+6QrWqsuup7GnDtlIyqbP4g8LRfZAAktE8fwm21/wzxWOyRjKR60LuDy9Hphvercv0N2ESqaZwclaQuhCBpZl4bMeH9apH6xzInrxiNEZHG8p3hIsCZNzvqbUB8jtp4m+qPo4Kshvp8pslOg+n4peOhVkMRS2NTVAo9F2P/hf37AOW9RGm+BENjxINfOCpWzXhB1riiZzWQMOqCILZUSPcqC6VSm3AKm0woM4qGwX5O0Rxmha1Q==
+--------------------------------------------------------
+
+Response
+HTTP/1.1 200
+Server: nginx
+Date: Thu, 16 Apr 2026 01:02:05 GMT
+Content-Type: application/json;charset=UTF-8
+Connection: keep-alive
+Vary: Accept-Encoding
+MConfig-Bucket: 332181
+MConfig-Info: {}
+X-TraceId-V2: 0f2cae7db2205969a7de2b6a59d5769b^1775785347683^-1233923942
+x-cv: 1776301325412
+X-TraceId: 0000019d93cf3c6008d00aaf331a0007
+cache-control: no-cache
+cache-control: no-store
+expires: Thu, 01 Jan 1970 00:00:00 GMT
+GW-Thread: 109559
+GW-Time: 1776301325408
+X-From-Src: 39.144.219.176
+Content-Encoding: gzip
+Content-Length: 187
+
+Q1NKTWS8DABj8Zh7psdp46K8uFQQJ8tsh87OqN2pDv7oTsBfu14AAACt/CGxJj/IgS+fYijNKbEeX5SrfysP4zjJduzdXOn34R06Y4w7KlCBlQdOFwqyr4cxBV8lEY/DeYkD1WuiocUcin0CcqCStF5ZP1wVUFfs53O8MOoGoiONKQIm1wxp
