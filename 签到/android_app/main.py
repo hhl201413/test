@@ -67,7 +67,7 @@ def _font_kwargs(font_name):
 
 
 class MoyiApp(App):
-  title = '某遇助手'
+  title = '心遇助手'
 
   def build(self):
     self.font_name = FONT_NAME
@@ -99,7 +99,7 @@ class MoyiApp(App):
     root.add_widget(scroll)
 
     if self.font_name:
-      self._log('某遇助手已启动')
+      self._log('心遇助手已启动')
     else:
       self._log('未找到系统中文字体，中文可能显示异常')
     return root
@@ -138,7 +138,10 @@ class MoyiApp(App):
     box.add_widget(cookie)
     box.add_widget(remark)
 
-    popup = Popup(title='添加账号', content=box, size_hint=(0.92, 0.7))
+    popup_kw = {'title': '添加账号', 'content': box, 'size_hint': (0.92, 0.7)}
+    if self.font_name:
+      popup_kw['title_font'] = self.font_name
+    popup = Popup(**popup_kw)
 
     def save(_):
       n, c = nick.text.strip(), cookie.text.strip()

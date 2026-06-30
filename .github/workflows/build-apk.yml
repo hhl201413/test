@@ -37,44 +37,33 @@ jobs:
           if [ -n "$FONT" ]; then
             cp "$FONT" fonts/noto.ttc
             echo "Using font: $FONT"
-          else
-            echo "Warning: no CJK font found"
           fi
 
-      - name: Install buildozer
+      - name: Install buildozer 1.4.0
         run: |
           python3 -m pip install --user -U pip
-          python3 -m pip install --user "cython==0.29.36" buildozer
+          python3 -m pip install --user "cython==0.29.36" "buildozer==1.4.0"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           buildozer --version
-          cython --version
 
-      - name: Cache Buildozer
+      - name: Cache Android SDK and NDK only
         uses: actions/cache@v4
         with:
-          path: 签到/android_app/.buildozer
-          key: buildozer-v3-${{ hashFiles('签到/android_app/buildozer.spec') }}
-          restore-keys: |
-            buildozer-v3-
+          path: 签到/android_app/.buildozer/android/platform/android-sdk
+          key: android-sdk-v2-${{ hashFiles('签到/android_app/buildozer.spec') }}
+          restore-keys: android-sdk-v2-
 
       - name: Build APK
         run: |
           set -o pipefail
           export BUILDOZER_WARN_ON_ROOT=0
           rm -rf .buildozer/android/platform/python-for-android
+          rm -rf .buildozer/android/platform/build-arm64-v8a
           buildozer -v android debug 2>&1 | tee build.log
 
       - name: Show log tail on failure
         if: failure()
-        run: |
-          echo "========== build.log (last 150 lines) =========="
-          tail -n 150 build.log || true
-          echo "========== .buildozer logs =========="
-          find .buildozer -name "*.txt" -o -name "*.log" 2>/dev/null | head -20
-          find .buildozer -name "*.txt" -exec tail -n 30 {} \; 2>/dev/null | tail -n 100 || true
-
-      - name: List output
-        run: ls -lh bin/ || true
+        run: tail -n 150 build.log || true
 
       - name: Upload APK
         if: success()
