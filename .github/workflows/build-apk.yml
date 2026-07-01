@@ -69,9 +69,12 @@ jobs:
         run: |
           set -o pipefail
           export BUILDOZER_WARN_ON_ROOT=0
+          # 清除全局/本地缓存，避免 hostpython3 沿用旧版 Python 3.14
+          rm -rf "$HOME/.buildozer"
           rm -rf .buildozer/android/platform/python-for-android
           rm -rf .buildozer/android/platform/build-arm64-v8a
           rm -rf .buildozer/android/platform/android-ndk-r28c
+          python3 --version
           buildozer -v android debug 2>&1 | tee build.log
 
       - name: Show log tail on failure

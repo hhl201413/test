@@ -10,7 +10,6 @@ requirements = python3==3.10.12,kivy==2.3.1,requests,urllib3,certifi,charset-nor
 orientation = portrait
 fullscreen = 0
 p4a.bootstrap = sdl2
-p4a.branch = develop
 android.permissions = INTERNET
 android.api = 31
 android.minapi = 21
