@@ -32,7 +32,7 @@ jobs:
             libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev \
             libjpeg-dev libpng-dev libfreetype6-dev \
             libavformat-dev libavcodec-dev libswscale-dev \
-            fonts-noto-cjk
+            fonts-noto-cjk patchelf
 
       - name: Pin python3 for python-for-android
         run: |
@@ -50,10 +50,10 @@ jobs:
             echo "Using font: $FONT"
           fi
 
-      - name: Install buildozer 1.4.0
+      - name: Install buildozer
         run: |
           python -m pip install --user -U pip
-          python -m pip install --user "cython==0.29.36" "buildozer==1.4.0"
+          python -m pip install --user "cython==0.29.36" "buildozer==1.5.0"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           python3 --version
           buildozer --version
@@ -71,11 +71,16 @@ jobs:
           export BUILDOZER_WARN_ON_ROOT=0
           rm -rf .buildozer/android/platform/python-for-android
           rm -rf .buildozer/android/platform/build-arm64-v8a
+          rm -rf .buildozer/android/platform/android-ndk-r28c
           buildozer -v android debug 2>&1 | tee build.log
 
       - name: Show log tail on failure
         if: failure()
-        run: tail -n 150 build.log || true
+        run: |
+          echo "=== Errors in build.log ==="
+          grep -nE '\[ERROR\]|ERROR:|Command failed|Traceback|Build failed' build.log | tail -40 || true
+          echo "=== Last 200 lines ==="
+          tail -n 200 build.log || true
 
       - name: Upload APK
         if: success()
