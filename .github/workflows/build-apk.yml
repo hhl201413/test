@@ -21,13 +21,6 @@ jobs:
         with:
           python-version: '3.10.12'
 
-      - name: Pin python3 for python-for-android
-        run: |
-          PY310="$(command -v python)"
-          python --version
-          sudo ln -sf "$PY310" /usr/bin/python3
-          python3 --version
-
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -40,6 +33,13 @@ jobs:
             libjpeg-dev libpng-dev libfreetype6-dev \
             libavformat-dev libavcodec-dev libswscale-dev \
             fonts-noto-cjk
+
+      - name: Pin python3 for python-for-android
+        run: |
+          PY310="$(command -v python)"
+          python --version
+          sudo ln -sf "$PY310" /usr/bin/python3
+          python3 --version
 
       - name: Prepare Chinese font
         run: |

@@ -9,7 +9,7 @@ version = 1.0.0
 requirements = python3==3.10.12,kivy==2.3.0,requests,urllib3,certifi,charset-normalizer,idna
 orientation = portrait
 fullscreen = 0
-android.bootstrap = sdl2
+p4a.bootstrap = sdl2
 android.permissions = INTERNET
 android.api = 31
 android.minapi = 21
